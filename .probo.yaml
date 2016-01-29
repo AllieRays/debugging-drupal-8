@@ -1,0 +1,10 @@
+assets:     
+  - dev.sql.gz
+steps:
+  - name: Probo site setup
+    plugin: Drupal
+    database: dev.sql.gz
+    databaseGzipped: true
+    databaseUpdates: true
+    revertFeatures: true
+    clearCaches: true

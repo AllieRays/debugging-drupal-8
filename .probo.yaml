@@ -9,6 +9,3 @@ steps:
     plugin: Drupal
     database: dev.sql.gz
     databaseGzipped: true
-    databaseUpdates: true
-    revertFeatures: true
-    clearCaches: true

@@ -1,6 +1,10 @@
 assets:     
   - dev.sql.gz
 steps:
+  - name: Update Composer
+    command: '/usr/local/bin/composer self-update'
+  - name: Install drush-master for d8
+    command: 'composer global require drush/drush:dev-master ; cd /usr/local/bin ; mv drush drush7 ; ln -s $HOME/.composer/vendor/bin/drush drush'
   - name: Probo site setup
     plugin: Drupal
     database: dev.sql.gz
@@ -8,8 +12,3 @@ steps:
     databaseUpdates: true
     revertFeatures: true
     clearCaches: true
-    
-  - name: Update Composer
-    command: '/usr/local/bin/composer self-update'
-  - name: Install drush-master for d8
-    command: 'composer global require drush/drush:dev-master ; cd /usr/local/bin ; mv drush drush7 ; ln -s $HOME/.composer/vendor/bin/drush drush'

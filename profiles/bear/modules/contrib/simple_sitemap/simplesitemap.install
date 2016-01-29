@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Module install functions creating a database table.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function simplesitemap_schema() {
+  $schema['simplesitemap'] = array(
+    'description' => 'Holds XML sitemaps as strings for quick retrieval.',
+    'fields' => array(
+      'language_code' => array(
+        'description' => 'Language code of the sitemap used as unique identifier.',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 2,
+      ),
+      'sitemap_string' => array(
+        'description' => 'XML sitemap string.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('language_code'),
+  );
+  return $schema;
+}

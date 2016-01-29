@@ -1,0 +1,4 @@
+services:
+  plugin.manager.panels.display_builder:
+    class: Drupal\panels\Plugin\DisplayBuilder\DisplayBuilderManager
+    arguments: ['@container.namespaces', '@cache.discovery', '@module_handler']

@@ -1,0 +1,276 @@
+<?php
+
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements hook_theme().
+ */
+function bear_coat_theme($existing, $type, $theme, $path) {
+  return array(
+    'search_block_input_wrapper' => array(
+      'render element' => 'element',
+      'function' => 'bear_coat_search_block_input_wrapper',
+    ),
+    'pager_item_list' => array(
+      'variables' => array(
+        'items' => array(),
+      ),
+    ),
+    'labeled_button' => array(
+      'render element' => 'element',
+    ),
+  );
+}
+
+/**
+ * Implements preprocess_html() to add classes to the body.
+ */
+function bear_coat_preprocess_html(&$variables) {
+
+  if (theme_get_setting('semantic_ui')) {
+    $variables['attributes']['class'][] = 'semantic-ui';
+  }
+  if (theme_get_setting('sidr')) {
+    $variables['attributes']['class'][] = 'has-sidr';
+  }
+}
+
+function bear_coat_preprocess_input__submit(&$variables) {
+  $element = $variables['element'];
+  $element['#attributes']['class'][] = 'ui';
+}
+
+function bear_coat_preprocess_page(&$variables) {
+  $account = \Drupal::currentUser();
+  if (theme_get_setting('login_popup')) {
+    if ($account->isAnonymous()) {
+      $variables['loginpopup'] = "<a class='loginpopup item floated in' href='/user/login'><i class='setting icon'></i> Login</a>";
+    }
+    else {
+      $variables['loginpopup'] = "<a class='loginpopup item floated out' href='/user/logout'><i class='setting icon'></i> Logout</a>";
+    }
+  }
+  if (theme_get_setting('semantic_ui')) {
+    $variables['#attached']['library'][] = 'bear_coat/semantic_ui';
+  }
+  if (theme_get_setting('sidr')) {
+    $variables['#attached']['library'][] = 'bear_coat/sidr';
+    $variables['sidr'] = "<div class=\"responsive-nav\"><div id=\"sidr-bttn\"><a id=\"responsive-menu-button\" href=\"#sidr-main\"><span></span></a></div></div>";
+  }
+}
+
+function bear_coat_preprocess_select(&$variables) {
+  $element = &$variables['element'];
+  $variables['attributes'] = $element['#attributes'];
+
+  // Set the element's attributes.
+  \Drupal\Core\Render\Element::setAttributes($element, array('id', 'name', 'size'));
+
+  $variables['attributes']['class'][] = 'ui search dropdown';
+  $variables['options'] = form_select_options($element);
+}
+
+function bear_coat_preprocess_input(&$variables) {
+  $element = &$variables['element'];
+  $attributes = new Attribute($variables['attributes']);
+
+  // Set the element's attributes.
+  \Drupal\Core\Render\Element::setAttributes($element, array('id', 'name', 'value', 'type'));
+
+  // Autocomplete fields.
+  if (!empty($element['#autocomplete_route_name']) && Drupal::PathValidator($element['#autocomplete_route_name'])) {
+    $variables['autocomplete'] = TRUE;
+
+    // Attributes for hidden input field.
+    $autocomplete_attributes = new Attribute();
+    $autocomplete_attributes['type'] = 'hidden';
+    $autocomplete_attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
+    $autocomplete_attributes['value'] = Drupal::Url($element['#autocomplete_route_name'], $element['#autocomplete_route_parameters']);
+    $autocomplete_attributes['disabled'] = 'disabled';
+    $autocomplete_attributes['class'] = 'autocomplete';
+
+
+    // Fallback to using core's throbber.
+    if (empty($icon)) {
+      $icon = array(
+        '#type' => 'container',
+        '#attributes' => array(
+          'class' => array(
+            'ajax-progress',
+            'ajax-progress-throbber',
+            'invisible',
+          ),
+        ),
+        'throbber' => array(
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => array(
+            'class' => array('throbber'),
+          ),
+        ),
+      );
+    }
+    $variables['autocomplete_icon'] = $icon;
+    $variables['autocomplete_attributes'] = $autocomplete_attributes;
+  }
+
+  // Submit Buttons
+  if ($element['#type'] = 'submit') {
+    $variables['attributes']['class'][] = 'ui';
+  }
+
+  // Checkboxes.
+  if ($element['#type'] = 'checkbox') {
+    $variables['attributes']['class'][] = "ui";
+  }
+
+}
+
+/**
+ * Preprocess form_element.
+ */
+function bear_coat_preprocess_form_element(&$variables) {
+  $element = &$variables['element'];
+  $title_display = $element['#title_display'];
+  $name = !empty($element['#name']) ? $element['#name'] : FALSE;
+  $type = !empty($element['#type']) ? $element['#type'] : FALSE;
+  $checkbox = $type && $type === 'checkbox';
+  $radio = $type && $type === 'radio';
+
+  // This function is invoked as theme wrapper, but the rendered form element
+  // may not necessarily have been processed by Drupal::formBuilder()->doBuildForm().
+  $element += array(
+    '#title_display' => 'before',
+  );
+
+  if (!empty($element['#autocomplete_route_name']) && Drupal::PathValidator($element['#autocomplete_route_name'])) {
+    $variables['is_autocomplete'] = TRUE;
+  }
+
+  // See http://getbootstrap.com/css/#forms-controls.
+  if (isset($element['#type'])) {
+    if ($radio) {
+      $variables['is_radio'] =  TRUE;
+    }
+    elseif ($checkbox) {
+      $variables['is_checkbox'] = TRUE;
+    }
+    elseif ($type != 'hidden') {
+      $variables['is_form_group'] = TRUE;
+    }
+  }
+
+  // If #title is not set, we don't display any label or required marker.
+  if (!isset($element['#title'])) {
+    $element['#title_display'] = 'none';
+  }
+  $variables['title_display'] = $element['#title_display'];
+  // Add label_display and label variables to template.
+  $variables['label_display'] = $element['#title_display'];
+
+  if ($checkbox) {
+    $variables['attributes']['class'][] = "ui checkbox form-item";
+  }
+  if ($radio) {
+    $variables['attributes']['class'][] = "ui radio checkbox form-item";
+  }
+}
+
+/**
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+function bear_coat_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // General
+  $form['#attributes']['class'][] = 'ui';
+  $form['#attributes']['class'][] = 'form';
+
+  //dpm($form_state);
+
+   //Forms by ID
+  if ($form_id) {
+    switch ($form_id) {
+      case 'search_form':
+        // Hide default submit button.
+        $form['basic']['submit']['#attributes']['class'][] = 'element-invisible';
+
+        // Append search icon to the input.
+        $form['basic']['keys']['#attributes']['placeholder'] = t('Search ...');
+        $form['basic']['keys']['#attributes']['class'][] = 'prompt';
+        //$form['basic']['keys']['#theme_wrappers'] = array('search_block_input_wrapper');
+        break;
+
+      case 'search_block_form':
+        $form['#attributes']['class'][] = 'search-form';
+        $form['actions']['submit']['#attributes']['class'][] = 'visually-hidden';
+
+        $form['keys']['#attributes']['placeholder'] = t('Search ...');
+        $form['keys']['#attributes']['class'][] = 'prompt';
+        $form['keys']['#theme_wrappers'] = array('search_block_input_wrapper');
+        break;
+
+      case 'user_login_block':
+        $form['name']['#attributes']['placeholder'] = t('Username');
+        $form['pass']['#attributes']['placeholder'] = t('Password');
+        break;
+
+      case 'user_login':
+        $form['#attributes']['class'][] = 'segment';
+        $form['name']['#attributes']['placeholder'] = t('Username');
+        $form['pass']['#attributes']['placeholder'] = t('Password');
+        break;
+
+      case 'user_register_form':
+        $form['#attributes']['class'][] = 'segment';
+        $form['account']['name']['#attributes']['placeholder'] = t('Username');
+        $form['account']['mail']['#attributes']['placeholder'] = t('Email');
+        break;
+
+      case 'user_pass':
+        $form['#attributes']['class'][] = 'segment';
+        $form['name']['#attributes']['placeholder'] = t('Username or e-mail address');
+        break;
+
+      case 'comment_node_forum_form':
+        $form['#attributes']['class'][] = 'reply';
+        break;
+    }
+  }
+}
+
+/**
+ * Theme function for block search input.
+ */
+function bear_coat_search_block_input_wrapper(&$variables) {
+  $input_wrapper = array(
+    '#type' => 'container',
+    '#attributes' => array(
+      'class' => array(
+        'ui',
+        'search',
+        'icon',
+        'input',
+      ),
+    ),
+  );
+  $input_wrapper['input'] = array(
+    '#markup' => $variables['element']['#children'],
+  );
+  $input_wrapper['icon'] = array(
+    '#markup' => '<i class="search icon"></i>',
+  );
+
+  return drupal_render($input_wrapper);
+}
+
+/**
+ * Implements hook_preprocess_table().
+ */
+function bear_coat_preprocess_table(&$variables) {
+  $variables['attributes']['class'][] = 'ui';
+  $variables['attributes']['class'][] = 'celled';
+  $variables['attributes']['class'][] = 'table';
+  $variables['attributes']['class'][] = 'unstackable';
+}

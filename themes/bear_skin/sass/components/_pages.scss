@@ -1,0 +1,50 @@
+.favorite-sock-form  {
+  max-width: 875px;
+  margin: 0 auto;
+
+  .button{
+    display:block;
+    clear:both;
+    font-size:40px;
+    margin:0 auto;
+  }
+
+  .form-item-fav-sock {
+    width: 250px;
+    height: 300px;
+    float: left;
+    position:relative;
+    margin:20px;
+  }
+
+  .form-radio{
+    position:absolute;
+    left:10px;
+    bottom:25px;
+  }
+  .option{
+    position:absolute;
+    left:40px;
+    bottom:10px;
+    font-size:30px;
+  }
+
+  .form-item-fav-sock:nth-of-type(1) {
+    background: url('../images/ankle-biters-250x250.png') center 0 no-repeat;
+  }
+  .form-item-fav-sock:nth-of-type(2) {
+    background: url('../images/old-fashions-250x250.png') center 0 no-repeat;
+  }
+  .form-item-fav-sock:nth-of-type(3) {
+    background: url('../images/knee-highs-250x250.png') center 0 no-repeat;
+  }
+}
+
+
+
+#header .site-header__logo img{
+  max-width:85%;
+}
+
+
+

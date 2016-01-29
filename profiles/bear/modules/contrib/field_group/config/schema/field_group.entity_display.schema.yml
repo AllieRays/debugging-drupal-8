@@ -1,0 +1,27 @@
+core.entity_view_display.*.*.*.third_party.field_group:
+  type: sequence
+  label: 'Field group settings on entity view'
+  sequence:
+    - type: mapping
+      label: A field group
+      mapping:
+        children:
+          type: sequence
+          label: 'The fields belonging to the region'
+          sequence:
+            - type: string
+              label: 'The field name'
+        label:
+          type: string
+          label: Readable name of the group
+        parent_name:
+          type: string
+          label: 'The parent group of this group'
+        weight:
+          type: integer
+          label: 'The weight of the group'
+        format_type:
+          type: string
+          label: 'The formatter of the group'
+        format_settings:
+          type: field_group.field_group_formatter_plugin.[%parent.format_type]

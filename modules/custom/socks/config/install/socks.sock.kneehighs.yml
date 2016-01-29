@@ -1,0 +1,23 @@
+# This file defines a default config entity. This allows the module to include
+# config entities that are present 'out of the box'. Default config entities
+# are created in Drupal when the module is enabled. They are removed when the
+# module is uninstalled.
+
+# Default config entities can be edited by the user within Drupal. This edited
+# entity wil become exportable through the configuration system. This file,
+# however, will remain untouched.
+
+# For our config entity to be added at installation time, we have to place it in
+# the config/install directory of our module. Thus our file is located at:
+# config/install/socks.ankleBiter.yml.
+
+# You can see where these properties are defined in the annotation of
+# Drupal\socks\Entity\Sock.
+
+# The id of the config entity.
+id: kneehighs
+# Our properties follow.
+label: 'Knee High Socks.'
+description: 'Knee High Socks that come right up to the knees.'
+fabric: 'spandex'
+rating: 8

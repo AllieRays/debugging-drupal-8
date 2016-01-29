@@ -1,0 +1,35 @@
+.wrapper--footer {
+  border: 0;
+}
+
+.site-footer {
+  background: $zivtech-off-black;
+}
+
+.site-footer {
+  color: #fff;
+  .region-footer {
+    padding: 30px 20px;
+    @include breakpoint($breakpoint-to-max-width) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+#footer {
+  .block-menu {
+    float: left;
+    margin: 0 50px 0 0;
+  }
+  ul:not('.contextual-links') {
+    margin: 0;
+    padding: 0;
+    li {
+      list-style-type: none;
+      a {
+        @include link-colors($zivtech-white, $hover: $zivtech-blue, $active: $zivtech-blue, $focus: $zivtech-blue);
+      }
+    }
+  }
+}

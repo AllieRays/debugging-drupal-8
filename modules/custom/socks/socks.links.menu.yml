@@ -1,0 +1,19 @@
+socks.menu:
+  title: Socks
+  route_name: entity.sock.list
+  description: 'List all Sock Types.'
+  parent: system.admin_structure
+  weight: 98
+favorite_sock_admin.menu:
+  title: Favorite Sock Form
+  route_name: favorite_sock_form.form
+  description: 'User form to pick favorite sock.'
+  parent: system.admin_structure
+  weight: 99
+favorite_sock_main.menu:
+  title: What's Your Favorite Sock?
+  route_name: favorite_sock_form.form
+  description: 'User form to pick favorite sock.'
+  parent: main
+  menu_name: main
+  weight: 99

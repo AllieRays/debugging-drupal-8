@@ -1,0 +1,7 @@
+name: 'Socks'
+type: module
+description: 'An example module showing how to create a Socks.'
+configure: entity.sock.list
+package: custom
+core: 8.x
+

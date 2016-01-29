@@ -1,0 +1,34 @@
+# Schema for the configuration files of the Config Entity Example module.
+
+# This schema tells the config system how to read our config YML files.
+# See for example the file config/socks.ankleBiter.yml, which
+# contains our default config entity.
+
+# Documentation for schema files like this one is located here:
+# https://drupal.org/node/1905070
+
+socks.sock.*:
+  type: mapping
+  label: 'Sock'
+  mapping:
+    id:
+      type: string
+      label: 'Sock id'
+    uuid:
+      type: string
+      label: 'UUID'
+    label:
+      type: label
+      label: 'Label'
+    langcode:
+      type: string
+      label: 'Default language'
+    description:
+      type: string
+      label: 'Description'
+    fabric:
+      type: string
+      label: 'fabric'
+    rating:
+      type: integer
+      label: 'rating'

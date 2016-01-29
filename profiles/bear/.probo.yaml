@@ -1,0 +1,15 @@
+steps:
+  - name: Update Composer
+    command: '/usr/local/bin/composer self-update'
+  - name: Install drush-master for d8
+    command: 'composer global require drush/drush:dev-master ; cd /usr/local/bin ; mv drush drush7 ; ln -s $HOME/.composer/vendor/bin/drush drush'
+  - name: Make and install Bear
+    plugin: Drupal
+    makeFile: build-a-bear.make
+    profileName: bear
+    runInstall: true
+    clearCaches: false # drush cc all is not available for d8. Use cache-rebuild.
+  - name: Clear caches
+    command: 'drush cr'
+  - name: Run behat tests
+    command: 'cd /var/www/html/profiles/contrib/bear/tests ; composer install ; ./bin/behat --profile probo'

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+<head>
+  <head>
+    <head-placeholder token="{{ placeholder_token|raw }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token|raw }}">
+    <js-placeholder token="{{ placeholder_token|raw }}">
+  </head>
+</head>
+<body{{ attributes }}>
+  <ul id="skip-link" class="visually-hidden focusable">
+    <li><a href="#mainMenuLabel" class="element-invisible element-focusable">Navigation</a></li>
+    <li><a href="#content" class="element-invisible element-focusable">Content</a></li>
+    <li><a href="#footer" class="element-invisible element-focusable">Footer</a></li>
+  </ul>
+
+  {{ page_top }}
+  {{ page }}
+  {{ page_bottom }}
+
+  <!--[if lt IE 9]>
+  <script src="{# PHP: print $base_path . $path_to_bear_skin; #}/js/vendor/html5-respond.js"></script>
+  <![endif]-->
+  <!--[if lt IE 9]>
+  <script src="{# PHP: print $base_path . $path_to_bear_skin; #}/js/vendor/html5.js"></script>
+  <![endif]-->
+  <js-bottom-placeholder token="{{ placeholder_token|raw }}">
+  <script>jQuery.noConflict();</script>
+</body>
+</html>

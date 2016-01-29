@@ -1,0 +1,45 @@
+
+/** Broken ** /
+  protected $rating;
+
+
+    public function buildRow(EntityInterface $entity) {
+      $row['id'] = $entity->id();
+      $row['description'] = $entity->description;
+      $row['fabric'] = $entity->fabric;
+      $row['rating'] = $entity->rating;
+
+      return $row + parent::buildRow($entity);
+    }
+
+}
+
+
+
+
+/** Fixed ** /
+  protected $rating;
+
+  /**
+   * @return string
+   */
+  public function getRating() {
+    return $this->rating;
+  }
+
+  /**
+   * @param string $rating
+   */
+  public function setRating($rating) {
+    $this->rating = $rating;
+  }
+
+}
+  public function buildRow(EntityInterface $entity) {
+    $row['id'] = $entity->id();
+    $row['description'] = $entity->description;
+    $row['fabric'] = $entity->fabric;
+    $row['rating'] = $entity->getRating();
+
+    return $row + parent::buildRow($entity);
+  }

@@ -1,0 +1,27 @@
+global_scripts:
+  version: 1.x
+  js:
+    js/scripts.js: {}
+
+global_styling:
+  version: 1.x
+  css: 
+    theme:
+      css/bear_coat.css: { media: screen }
+
+semantic_ui:
+  version: 1.x
+  css:
+    base:
+      semantic_ui/dist/semantic.css: {}
+  js:
+    semantic_ui/dist/semantic.js: {}
+    js/bear_coat_semantic_ui.js: {}
+
+sidr:
+  version: 1.x
+  css:
+    base:
+      sidr/dist/stylesheets/jquery.sidr.light.css: {}
+  js:
+    sidr/dist/jquery.sidr.js: {}

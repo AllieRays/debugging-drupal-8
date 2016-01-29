@@ -1,0 +1,156 @@
+$header-height: 105px;
+$header-compressed-height: 55px;
+
+// Our Mixin for compressed header (mobile and scroll)
+@mixin compressHeader {
+  height: $header-compressed-height;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  .site-header__logo {
+    opacity: 1;
+    transition: opacity .2s ease-in-out;
+    overflow: hidden;
+    float: left;
+    margin-right: -60px;
+    img {
+      width: 40%;
+      transition: width .3s ease-in-out;
+    }
+  }
+  .site-header__name {
+    transition: all .3s ease-in-out;
+    padding: 5px 10px;    
+  }
+  #header {
+    .block-search,
+    .block-views {
+      input.form-text {
+        padding: .4em 1em;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.wrapper--header {
+  position: fixed;
+  width: 100%;
+  -webkit-filter: drop-shadow(0 3px 2px rgba(0,0,0,0.1));
+  filter: url(../images/shadow.svg#drop-shadow);
+  filter: progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, Strength=5, Direction=180);
+  background: #f5f5f5;
+  z-index: 99;
+  transition: all .3s ease-in-out;
+  @include compressHeader;
+  @include breakpoint($breakpoint-medium-width) {
+    height: $header-height;
+    .site-header__logo {
+      display: block;
+      //width: 120px;
+      clear: both;
+      margin-right: 20px;
+      img {
+        height: auto;
+        width: 100%;
+      }
+    }
+    .site-header__name {
+      float: left;
+      padding: 30px 10px;    
+    }
+    &.compressed {
+      @include compressHeader;
+      #header {
+        .block-search,
+        .block-views {
+          right: 80px;
+        }
+        a.loginpopup {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+}
+
+#header {
+  position: relative;
+  height: 100%;
+  .site-header__logo {
+    max-width: 120px;
+    transition: all .3s ease-in-out;
+    img {
+      display: block;
+    }
+  }
+  .region-header {
+    height: 100%;
+  }
+  .responsive-nav {
+    margin: 0;
+    @include align(v);
+    right: 20px;
+    @include breakpoint($breakpoint-medium-width) {
+      display: none;
+    }
+  }
+  .search-block-form {
+    @include align(v);
+    transition: all .2s ease-in-out;
+    right: 130px;
+    width: auto;
+    z-index: 2;
+    @include breakpoint($breakpoint-medium-width) {
+      right: 20px;
+      transition: none;
+    }
+    input.form-search {
+      transition: width .2s ease-in-out;
+      width: 100px !important;
+      background: white;
+      @include breakpoint($breakpoint-medium-width) {
+        width: 120px !important;
+      }
+      &:focus {
+        width: 250px !important;
+      }
+    }
+    &.focus {
+      top: 16px;
+      //width: 100%;
+      left: -20px;
+      padding: 15px 15px 13px;
+      background: rgba(0, 0, 0, .7);
+      margin: 0 20px;
+      @include breakpoint($breakpoint-medium-width) {
+        @include align(v);
+        width: auto;
+        background: transparent;
+        left: inherit;
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+  a.loginpopup {
+    position: absolute;
+    top: 8px;
+    font-size: 12px;
+    right: 5em;
+    z-index: 1;
+    transition: all .3s ease-in-out;
+    @include link-colors($zivtech-dark, $hover: $zivtech-blue, $active: $zivtech-blue, $focus: $zivtech-blue);
+    @include breakpoint($breakpoint-medium-width) {
+      top: 0;
+      right: 2em;
+    }
+  }
+}
+
+// Related to Header
+.wrapper--main {
+  padding-top: $header-compressed-height;
+  @include breakpoint($breakpoint-medium-width) {
+    padding-top: $header-height;
+  }
+}

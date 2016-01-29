@@ -1,0 +1,54 @@
+<?php
+
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements bear_skin_preprocess_html function.
+ *
+ * @param array <<any params>>
+ *   <<describe the params and what they do here>>
+ */
+function bear_skin_preprocess_html(&$variables, $hook) {
+  
+  // Add variables and paths needed for HTML5 and responsive support.
+  $variables['base_path'] = base_path();
+  $variables['path_to_bear_skin'] = drupal_get_path('theme','bear_skin');
+  $variables['skip_link_anchor'] = 'main-content';
+  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+
+  $variables['attributes']['class'][] = 'html';
+  // Add a class that tells us whether we're on the front page or not.
+  $variables['attributes']['class'][] = $variables['is_front'] ? 'front' : 'not-front';
+  // Add a class that tells us whether the page is viewed by an authenticated user or not.
+  $variables['attributes']['class'][] = $variables['logged_in'] ? 'logged-in' : 'not-logged-in';
+
+  // add class depending on Theme layout settings
+  $variables['fixed_layout'] = (theme_get_setting('main_layout') == 'fixed');
+  $variables['fluid_layout'] = (theme_get_setting('main_layout') == 'fluid');
+  if (theme_get_setting('main_layout') == 'fixed') {
+    $variables['attributes']['class'][] = 'fixed-bear';
+  } else if (theme_get_setting('main_layout') == 'fluid') {
+    $variables['attributes']['class'][] = 'fluid-bear';
+  }
+
+  // if the sticky footer option is selected, set a class
+  if (theme_get_setting('sticky_footer')) {
+    $variables['attributes']['class'][] = 'with-sticky-footer';
+  }
+
+  if (!empty($variables['page']['sidebar_first']) && !empty($variables['page']['sidebar_second'])) {
+    $variables['attributes']['class'][] = 'layout-two-sidebars';
+  }
+  elseif (!empty($variables['page']['sidebar_first'])) {
+    $variables['attributes']['class'][] = 'layout-one-sidebar';
+    $variables['attributes']['class'][] = 'layout-sidebar-first';
+  }
+  elseif (!empty($variables['page']['sidebar_second'])) {
+    $variables['attributes']['class'][] = 'layout-one-sidebar';
+    $variables['attributes']['class'][] = 'layout-sidebar-second';
+  }
+  else {
+    $variables['attributes']['class'][] = 'layout-no-sidebars';
+  }
+}

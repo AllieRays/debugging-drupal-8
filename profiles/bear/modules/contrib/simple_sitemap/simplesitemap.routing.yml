@@ -1,0 +1,6 @@
+simplesitemap.sitemap:
+ path: '/sitemap.xml'
+ defaults:
+   _controller: '\Drupal\simplesitemap\Controller\SimplesitemapController::get_sitemap'
+ requirements:
+   _permission: 'access content'

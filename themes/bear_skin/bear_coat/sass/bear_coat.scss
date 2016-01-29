@@ -1,0 +1,19 @@
+// ********
+// Bear Coat Specific Styles
+// Delete, override or modify to change styles, 
+// or create a new sub theme based on this one 
+// if not choosing to theme straight from Bear Skin
+// ********
+
+//From bear skin
+@import "../../sass/variables";
+@import "../../sass/mixins";
+@import "../../sass/reusable";
+@import "../../sass/vendor";
+
+// from bear coat
+@import "base/*";
+@import "components/*";
+
+// external
+@import url('//fonts.googleapis.com/css?family=Droid+Sans');

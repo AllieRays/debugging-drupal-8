@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Fieldgroup test module.
+ */
+
+/**
+ * Implements hook_entity_field_access().
+ */
+function field_group_test_entity_field_access($operation, \Drupal\Core\Entity\Field\FieldDefinitionInterface $field_definition,
+  \Drupal\Core\Session\AccountInterface $account, \Drupal\Core\Entity\Field\FieldItemListInterface $items = NULL) {
+
+  // Set access to false for field_no_access.
+  if ($operation == 'view' && $field_definition->getName() == 'field_no_access') {
+    return FALSE;
+  }
+}
+

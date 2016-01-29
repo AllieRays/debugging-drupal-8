@@ -1,0 +1,3 @@
+services:
+  socks.sock_content:
+    class: Drupal\socks\Service\SockContent

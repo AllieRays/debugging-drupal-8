@@ -1,0 +1,91 @@
+//
+// Mixins
+//
+@mixin alert($color: lighten($color-primary, 25%), $font-color: $alert-font-color, $padding: $alert-padding, $radius: $alert-border-radius) {
+  $darker-color: darken($color, 10%);
+  padding: $padding;
+  border-radius: $radius;
+  background-color: $color;
+  color: $font-color;
+  border: 1px solid $darker-color;
+  border-left-width: 10px;
+  margin: 1em 0;
+
+  a {
+    @include link-colors($font-color, $font-color);
+    border-bottom: 1px dotted $font-color;
+  }
+}
+
+//
+// Reusable classes
+//
+%alert {
+  @include alert;
+}
+
+%alert-error {
+  $darker-color: darken($color-error, 10%);
+  border-color: $darker-color;
+  background-color: $color-error;
+}
+
+%alert-success {
+  $darker-color: darken($color-success, 10%);
+  border-color: $darker-color;
+  background-color: $color-success;
+}
+
+%alert-warning {
+  $darker-color: darken($color-warning, 10%);
+  border-color: $darker-color;
+  background-color: $color-warning;
+}
+
+
+//
+// CSS Classes
+//
+.messages {
+  @extend %alert;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  &--error,
+  &.error {
+    @extend %alert-error;
+  }
+
+  &--success,
+  &--status,
+  &.status,
+  &.ok {
+    @extend %alert-success;
+  }
+
+  &--warning,
+  &.warning {
+    @extend %alert-warning;
+  }
+
+  &__list {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 1.5em;
+  }
+
+  &__item {
+    margin-bottom: 0.8em;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  // the output of dpm() gets put into a messages
+  // we need to set its font color here
+  .krumo-root {
+    color: $base-font-color;
+  }
+}

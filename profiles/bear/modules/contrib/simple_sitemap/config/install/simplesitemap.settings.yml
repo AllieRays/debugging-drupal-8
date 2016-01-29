@@ -1,0 +1,10 @@
+custom:
+  home:
+    path: /
+    index: true
+    priority: 1
+
+  contact:
+    path: /contact
+    index: false
+    priority: 0.5

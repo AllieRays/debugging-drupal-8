@@ -1,0 +1,4 @@
+#Define the administer permission for the sock config entity.
+'administer socks':
+  title: 'Administer socks'
+  description: Create and edit socks.

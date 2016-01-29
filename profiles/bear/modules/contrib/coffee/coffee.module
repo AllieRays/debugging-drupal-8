@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Coffee primary module file.
+ */
+
+use Drupal\Core;
+
+/**
+ * Implements hook_page_build().
+ */
+function coffee_page_build(&$page) {
+  // Access check.
+  $account = \Drupal::currentUser();
+  if ($account->hasPermission('access coffee')) {
+    $page['#attached']['library'][] = 'coffee/drupal.coffee';
+  }
+}
+
+/**
+ * Implements hook_hook_info().
+ */
+function coffee_hook_info() {
+  $hooks = array(
+    'coffee_commands' => array(
+      'group' => 'coffee',
+    ),
+  );
+
+  return $hooks;
+}
+
+
+/**
+ * Implements hook_toolbar().
+ *
+ * @todo Coffee specific icon.
+ */
+function coffee_toolbar() {
+  $items['coffee'] = array(
+    '#type' => 'toolbar_item',
+    'tab' => array(
+      '#type' => 'link',
+      '#title' => 'Go to',
+      '#href' => '',
+      '#attributes' => array(
+        'title' => t('Use alt+d to start Coffee and search for a page to go to '),
+        'class' => array('toolbar-icon', 'toolbar-icon-coffee'),
+      ),
+    ),
+    '#attached' => array(
+      'library' => array(
+        'coffee/drupal.coffee',
+      ),
+    ),
+  );
+
+  return $items;
+}

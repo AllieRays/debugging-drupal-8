@@ -1,0 +1,8 @@
+name: Admin Toolbar Tools
+core: 8.x
+description: Admin Toolbar Tools lets to add more fonctionalities in the admin menu.
+package: Administration
+type: module
+version: 1.0
+dependencies:
+  - admin_toolbar

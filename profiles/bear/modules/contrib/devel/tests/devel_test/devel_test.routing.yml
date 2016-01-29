@@ -1,0 +1,27 @@
+devel.silent_global:
+  path: '/devel-silent/global-shoutdown'
+  defaults:
+    _controller: '\Drupal\devel_test\Controller\DevelSilentTestContoller::globalShoutdown'
+    _title: 'Devel shoutdown'
+  requirements:
+    _permission: 'access devel information'
+
+devel.silent_route_parameter:
+  path: '/devel-silent/route-requirement'
+  defaults:
+    _controller: '\Drupal\devel_test\Controller\DevelSilentTestContoller::develSilentRouteRequirement'
+    _title: 'Devel settings'
+  requirements:
+    _permission: 'access devel information'
+    _devel_silent: 'TRUE'
+
+devel.silent_json:
+  path: '/devel-silent/json'
+  defaults:
+    _controller: '\Drupal\devel_test\Controller\DevelSilentTestContoller::jsonResponse'
+    _title: 'Devel settings'
+  requirements:
+    _permission: 'access devel information'
+
+route_callbacks:
+  - '\Drupal\devel_test\Routing\DevelEntityTestRoutes::routes'

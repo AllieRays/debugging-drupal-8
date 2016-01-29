@@ -1,0 +1,27 @@
+display_variant.plugin.block_page_layout:
+  type: display_variant.plugin
+  label: 'Block page layout display variant'
+  mapping:
+    blocks:
+      type: sequence
+      label: 'Blocks'
+      sequence:
+        - type: page_manager.block_plugin.[id]
+    selection_conditions:
+      type: sequence
+      label: 'Selection Conditions'
+      sequence:
+        - type: condition.plugin.[id]
+          label: 'Selection Condition'
+    selection_logic:
+      type: string
+      label: 'Selection logic'
+    page_title:
+      type: string
+      label: Page Title
+    layout:
+      type: string
+      label: Layout
+    layout_settings:
+      type: layout_plugin.settings.[%parent.layout]
+      label: Layout settings

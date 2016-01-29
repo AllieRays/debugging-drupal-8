@@ -1,0 +1,15 @@
+# Add some local task links to facilitate navigation.
+
+socks.add_action:
+  route_name: entity.sock.add_form
+  title: 'Add sock'
+  appears_on:
+    - entity.sock.list
+
+socks.list_action:
+  route_name: entity.sock.list
+  title: 'List Socks'
+  appears_on:
+    - entity.sock.add_form
+    - entity.sock.edit
+    - entity.sock.delete

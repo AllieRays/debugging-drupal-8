@@ -3,7 +3,6 @@
 namespace Drupal\socks\Service;
 use Drupal\Core\Controller\ControllerBase;
 
-
 class SockContent extends ControllerBase{
 
   public function displaySomethings(){

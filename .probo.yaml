@@ -1,0 +1,14 @@
+assets:
+  - dev.sql.gz
+steps:
+  - name: Update Composer
+    command: '/usr/local/bin/composer self-update'
+  - name: Install drush-master for d8
+    command: 'composer global require drush/drush:dev-master ; cd /usr/local/bin ; mv drush drush7 ; ln -s $HOME/.composer/vendor/bin/drush drush'
+  - name: Probo site setup
+    plugin: Drupal
+    database: dev.sql.gz
+    databaseGzipped: true
+    clearCaches: false # drush cc all is not available for d8. Use cache-rebuild.
+  - name: Append site-settings.php #append a hash_salt for probs to use drush 8x plugin
+    command: "echo \"require_once('sites/default/site-settings.php');\" >> /var/www/html/sites/default/settings.php"

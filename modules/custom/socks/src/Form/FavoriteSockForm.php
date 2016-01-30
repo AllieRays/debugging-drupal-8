@@ -49,14 +49,16 @@ class FavoriteSockForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    //drupal_set_message($form_state['values']['fav_sock']);
 
-    drupal_set_message($this->t('Your favorite sock is @fav_sock', array('@fav_sock' => $form_state->getValue('fav_sock'))));
-    if ($form_state->getValue('fav_sock') == 'Ankle Biters') {
+    $result = $form_state->getValue('fav_sock');
+
+    drupal_set_message($this->t('Your favorite sock is @fav_sock', array('@fav_sock' => $result)));
+
+    if ($result == 'Ankle Biters') {
       $form_state->setRedirect('socks.knee_highs_controller_content');
     }
     else {
-      if ($form_state->getValue('fav_sock') == 'Old Fashions') {
+      if ($result == 'Old Fashions') {
         $form_state->setRedirect('socks.old_fashions_controller_content');
       }
       else {
@@ -64,5 +66,6 @@ class FavoriteSockForm extends FormBase {
       }
     }
   }
+
 
 }

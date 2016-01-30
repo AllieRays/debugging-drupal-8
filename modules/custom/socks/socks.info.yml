@@ -1,6 +1,6 @@
 name: 'Socks'
 type: module
-description: 'An example module showing how to create a Socks.'
+description: 'A demo module showing how to create a Sock Entity, a basic Drupal Form and A Service. Demo how to make and debug your code.'
 configure: entity.sock.list
 package: custom
 core: 8.x

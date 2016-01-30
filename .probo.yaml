@@ -10,5 +10,5 @@ steps:
     database: dev.sql.gz
     databaseGzipped: true
     clearCaches: false # drush cc all is not available for d8. Use cache-rebuild.
-  - name: Append site-settings.php
+  - name: Append site-settings.php #append a hash_salt for probs to use drush 8x plugin
     command: "echo \"require_once('sites/default/site-settings.php');\" >> /var/www/html/sites/default/settings.php"
